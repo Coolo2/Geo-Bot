@@ -1,8 +1,7 @@
 import discord 
-import datetime 
 import random
 
-from resources import client, vars, geography, games, lang
+from resources import client, geography, games, lang
 
 from resources.command_functions import guess_common
 
@@ -38,7 +37,7 @@ class CapitalModal(discord.ui.Modal):
             lpr = lang.private_command(interaction)
 
             await interaction.response.send_message(
-                lpr.With(interaction.user.mention, self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
                 ephemeral=True
             )
 
@@ -74,3 +73,4 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
         lp.With(answer.capitals[0], 0).capitalGameTitle, 
         view=choices_view
     )
+    

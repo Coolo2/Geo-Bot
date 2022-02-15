@@ -1,7 +1,5 @@
 import discord
 
-from resources import client
-
 
 
 class en:
@@ -18,12 +16,12 @@ class en:
             self.wonTheGameCountryWas = f"{arg1} won the game! The country was **{arg2}**"
             self.userLostNowOn = f"{arg1} lost. They are now on {arg2}"
             self.gameFinished = f"**__Game Finished!__**\nGuesses: **{arg1}**\nCorrect Guesser: {arg2}\nTime: **{arg3}**"
-            self.gotFlagIncorrect = f"{arg1} got the flag incorrect. (guess {arg2}/2)"
+            self.gotFlagIncorrect = f"You got the flag incorrect. (guess {arg1}/2)"
             self.flagGameTitle = f"Use the buttons below to guess the flag's country\nGuesses: **{arg1}**"
-            self.gotCapitalIncorrect = f"{arg1} got the capital incorrect. (guess {arg2}/2)"
+            self.gotCapitalIncorrect = f"You got the capital incorrect. (guess {arg1}/2)"
             self.capitalGameTitle = f"Use the buttons below to guess the capital's country\n__**{arg1}**__\nGuesses: **{arg2}**"
 
-            self.informationAboutCountry = f"Information about {arg1}"
+            self.informationAbout = f"Information about {arg1}"
             self.rank = f"Rank `#{arg1}`"
 
             self.setLanguage = f"Successfully set language in this server to **{arg1}**"
@@ -41,6 +39,7 @@ class en:
     continent = "Continent"
     population = "Population"
     domains = "Domains"
+    country = "Country"
 
     countryDoesNotExist = "Country does not exist."
     locationMap = "Location (map)"
@@ -64,6 +63,7 @@ class en:
 
     endGame = "End Game"
     getStats = "Get Stats"
+    getCountryInfo = "Get Country Info"
 
     losses = "Losses"
     gameEnded = "Game Ended"
@@ -97,12 +97,12 @@ class es:
             self.wonTheGameCountryWas = f"¡{arg1} ganó el juego! El pais era **{arg2}**"
             self.userLostNowOn = f"{arg1} perdido. Ellas han perdido {arg2} veces"
             self.gameFinished = f"**__Juego Terminado!__**\nSuposiciones: **{arg1}**\nAdivinador correcto: {arg2}\nDuración: **{arg3}**"
-            self.gotFlagIncorrect = f"{arg1} adivinó la bandera incorrectamente. (intento {arg2}/2)"
+            self.gotFlagIncorrect = f"Adivinaste la bandera incorrectamente. (intento {arg2}/2)"
             self.flagGameTitle = f"Usa los botones de abajo para adivinar el país de la bandera\nSuposiciones: **{arg1}**"
-            self.gotCapitalIncorrect = f"{arg1} adivinó incorrectamente. (intento {arg2}/2)"
+            self.gotCapitalIncorrect = f"Adivinaste incorrectamente. (intento {arg2}/2)"
             self.capitalGameTitle = f"Usa los botones de abajo para adivinar el país de la ciudad capital\n__**{arg1}**__\nSuposiciones: **{arg2}**"
 
-            self.informationAboutCountry = f"Informacion sobre {arg1}"
+            self.informationAbout = f"Informacion sobre {arg1}"
             self.rank = f"Rango `#{arg1}`"
 
             self.setLanguage = f"Establecer con éxito la configuración de idioma en **{arg1}**"
@@ -120,6 +120,7 @@ class es:
     continent = "Continente"
     population = "Población"
     domains = "Dominios de la red"
+    country = "País"
 
     countryDoesNotExist = "Ese pais no existe."
     locationMap = "Ubicación en el mapa"
@@ -143,6 +144,7 @@ class es:
 
     endGame = "Terminar el juego"
     getStats = "Obtener estadísticas"
+    getCountryInfo = "Obtener información del país"
 
     losses = "Pérdidas"
     gameEnded = "El juego termino"
@@ -189,3 +191,4 @@ def private_command(interaction : discord.Interaction):
         return es
     else:
         return default
+        

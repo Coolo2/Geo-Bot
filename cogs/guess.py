@@ -1,10 +1,6 @@
-import discord
-import random
-import datetime
 
 from discord.ext import commands as cmds
 from discord import commands
-from resources import client, games
 
 from resources.command_functions import guess_flags_input, guess_capital_input, guess_flags_multiple_choice, guess_capital_multiple_choice
 
@@ -42,3 +38,4 @@ class guess(cmds.Cog):
     
 def setup(bot):
     bot.add_cog(guess(bot))
+    

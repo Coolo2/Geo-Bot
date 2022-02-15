@@ -1,9 +1,9 @@
+
 import discord 
 import random
 
 from discord.ext import commands as cmds
-from discord import commands
-from resources import client, games, lang, vars
+from resources import lang, vars
 
 from resources.interaction_templates import language
 
@@ -36,3 +36,4 @@ class events(cmds.Cog):
     
 def setup(bot):
     bot.add_cog(events(bot))
+    

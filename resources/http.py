@@ -25,3 +25,4 @@ class http():
                 self.datas[path] = json.load(f)
 
         return self.datas[path]
+        

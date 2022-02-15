@@ -1,18 +1,24 @@
+
 import discord
-import random
-import datetime
 
 from discord.ext import commands as cmds
 from discord import commands
-from resources import client, vars, images, errors, geography, lang
-from resources.command_functions import info_user
+from resources import errors, geography, lang
+from resources.command_functions import info_user, info_country, info_city
 
 async def country_autocomplete(ctx : discord.AutocompleteContext):
     countries = []
     for country in ctx.bot.client.countries:
         if not ctx.focused or ctx.value.lower() in country.name.lower():
             countries.append(country.name)
-    return countries
+    return countries[:25]
+
+async def city_autocomplete(ctx : discord.AutocompleteContext):
+    cities = []
+    for city in ctx.bot.client.cities:
+        if not ctx.focused or ctx.value.lower() in city.name.lower():
+            cities.append(f"{city.name}, {city.country_code}")
+    return cities[:25]
 
 
 class info(cmds.Cog):
@@ -43,37 +49,33 @@ class info(cmds.Cog):
         if not country:
             raise errors.MildErr(lp.countryDoesNotExist)
         
-        flag_average_color = await country.get_flag_average_colour()
+        view = discord.ui.View()
+        view.add_item(info_country.ToggleFlagButton(country))
 
-        embed = discord.Embed(title=lp.With(country.name).informationAboutCountry, description=f"[{lp.locationMap}]({country.map_url})", color=flag_average_color)
+        view.message = await ctx.respond(embed=await info_country.get_country_info_embed(self.bot.client, country, lp), view=view)
+    
+    @info_commands.command(name="city", description="Get information about a city")
+    async def _city(self, ctx : discord.ApplicationContext, city : discord.Option(str, description="The city to get information on", autocomplete=city_autocomplete)):
+        await self.bot.client.options.get_guild(ctx.guild).init(ctx)
 
-        embed.add_field(
-            name=lp.officialLanguage if len(country.languages) == 1 else lp.officialLanguages, 
-            value=(", ".join(country.languages)), 
-            inline=False
-        )
-        embed.add_field(
-            name=lp.capitalCity if len(country.capitals) == 1 else lp.capitalCities, 
-            value=(", ".join(country.capitals)), 
-            inline=False
-        )
-        embed.add_field(
-            name=lp.currency if len(country.capitals) == 1 else lp.currencies, 
-            value=(", ".join(f"{currency.name} (`{currency.symbol}`)" for currency in country.currencies)), 
-            inline=False
-        )
-        embed.add_field(name=lp.continent, value=f"{country.continent_name} ({country.subregion})", inline=False)
-        embed.add_field(name=lp.population, value=f"{country.population:,d} ({lp.With(country.get_population_rank(self.bot.client)).rank})")
+        lp = lang.private_command(ctx)
 
-        if len(country.domains) > 0:
-            embed.add_field(name=lp.domains, value="`" + ("`".join(country.domains)) + "`", inline=False)
-        
-        embed.set_thumbnail(url=country.flag_url)
+        country_code = None
+        if ", " in city:
+            country_code = city.split(", ")[1]
+            city = city.split(", ")[0]
+            
 
-        return await ctx.respond(embed=embed)
+        city : geography.City = self.bot.client.get_city(city, countryCode=country_code, ignoreCaps=True)
+
+        if not city:
+            raise errors.MildErr(lp.countryDoesNotExist)
+
+        await ctx.respond(embed=await info_city.get_city_info_embed(self.bot.client, city, lp))
         
 
 
     
 def setup(bot):
     bot.add_cog(info(bot))
+    

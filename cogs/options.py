@@ -1,11 +1,9 @@
-from optparse import OptionGroup
+
 import discord
-import random
-import datetime
 
 from discord.ext import commands as cmds
 from discord import commands
-from resources import client, lang , errors, vars
+from resources import lang, vars
 
 class option(cmds.Cog):
     def __init__(self, bot):
@@ -51,3 +49,4 @@ class option(cmds.Cog):
 
 def setup(bot):
     bot.add_cog(option(bot))
+    

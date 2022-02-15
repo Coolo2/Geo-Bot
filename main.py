@@ -1,6 +1,5 @@
 import discord 
 import os
-import logging 
 
 from resources import client 
 import webserver

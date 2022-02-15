@@ -1,9 +1,7 @@
 import discord 
-import requests
-import datetime 
 import json
 
-from resources import vars, economy, games, images, color, geography, options, http
+from resources import economy, games, geography, options, http
 
 
 class Client():
@@ -14,26 +12,23 @@ class Client():
         self.http = http.http(self)
 
         self.countries = []
-        self.countries_raw = {}
+        self.all_countries = []
+
+        self.cities = []
 
         self.games = games.Games()
 
         self._get_countries()
+        self._get_cities()
         
 
     def _get_countries(self):
         print("Getting country data...")
-        time_started = datetime.datetime.now()
 
-        r = requests.get("https://restcountries.com/v3.1/all")
-        self.countries_raw = r.json()
-        #with open("resources/countries.json", encoding="utf8") as f:
-        #    self.countries_raw = json.load(f)
+        with open("resources/json/countries.json", encoding="utf8") as f:
+            countries_raw = json.load(f)
 
-        print(f"Got ({(datetime.datetime.now() - time_started).total_seconds()}s)")
-
-        for country in self.countries_raw:
-            
+        for country in countries_raw:
             if "independent" in country and country["independent"]:
                 self.countries.append(
                     geography.Country(
@@ -41,13 +36,36 @@ class Client():
                         
                     )
                 )
+            self.all_countries.append(
+                geography.Country(
+                    country
+                        
+                )
+            )
+    
+    def _get_cities(self):
+        print("Getting city data...")
+        with open("resources/json/cities.json", encoding="utf8") as f:
+            cities = json.load(f)
+        
+        for city in cities:
+            self.cities.append(geography.City(city[0], city[1], city[2]))
     
     def get_country(self, countryName : str, ignoreCaps=False):
-        for country in self.countries:
+        for country in self.all_countries:
             if ignoreCaps and country.name.lower() == countryName.lower():
                 return country 
             if not ignoreCaps and country.name == countryName:
                 return country 
+        
+        return None
+    
+    def get_city(self, cityName : str, countryCode : str = None, ignoreCaps=False):
+        for city in self.cities:
+            if ignoreCaps and city.name.lower() == cityName.lower() and (countryCode == None or countryCode == city.country_code):
+                return city 
+            if not ignoreCaps and city.name == cityName and (countryCode == None or countryCode == city.country_code):
+                return city 
         
         return None
 

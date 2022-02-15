@@ -1,6 +1,5 @@
 
 import discord 
-import json
 
 from resources import lang
 

@@ -1,9 +1,8 @@
 from typing import List
 import discord 
-import datetime 
 import random
 
-from resources import client, vars, geography, games, lang
+from resources import client, geography, games, lang
 
 from resources.command_functions import guess_common
 
@@ -52,7 +51,7 @@ class FlagDropdown(discord.ui.Select):
             lpr = lang.private_command(interaction)
 
             await interaction.response.send_message(
-                lpr.With(interaction.user.mention, self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
                 ephemeral=True
             )
 
@@ -90,3 +89,4 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
         ),
             view=choices_view
     )
+    

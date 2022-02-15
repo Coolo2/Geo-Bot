@@ -33,3 +33,4 @@ def get_average_color(img : Image) -> discord.Color:
     img = Image.new('RGB', (300, 200), (avg[0], avg[1], avg[2]))
     rgb_int = avg[0] << 16 | avg[1] << 8 | avg[2]
     return discord.Color(rgb_int)
+    

@@ -4,9 +4,7 @@ import datetime
 
 from discord.ext import commands as cmds
 from discord import ApplicationCommandError, commands
-from resources import client, vars, images, errors, lang
-
-from EasyConversion import textformat 
+from resources import vars, errors, lang, color
 
 class errorHandling(cmds.Cog):
     def __init__(self, bot):
@@ -51,7 +49,7 @@ class errorHandling(cmds.Cog):
                 embed = discord.Embed(title=msgMild, description=f"{error.original}", colour=vars.embedFail)
                 return await ctx.respond(embed=embed, ephemeral=True)
 
-        print(f"{textformat.color.red}{error.__class__.__name__}{textformat.color.end} + {error}")
+        print(f"{color.red}{error.__class__.__name__}{color.end} + {error}")
         embed = discord.Embed(title=msgUnkown, description=f"```{error}```", colour=vars.embedFail, timestamp=datetime.datetime.now())
         await ctx.respond(embed=embed, ephemeral=True)
             
@@ -61,3 +59,4 @@ class errorHandling(cmds.Cog):
     
 def setup(bot):
     bot.add_cog(errorHandling(bot))
+    

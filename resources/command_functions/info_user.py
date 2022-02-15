@@ -1,4 +1,4 @@
-from resources import client, images, vars, lang
+from resources import client, images, vars
 import discord 
 
 
