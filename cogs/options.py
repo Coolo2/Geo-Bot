@@ -1,3 +1,4 @@
+from optparse import OptionGroup
 import discord
 import random
 import datetime
@@ -19,8 +20,13 @@ class option(cmds.Cog):
         language : commands.Option(str, required=False, description="The language for public messages in the guild", choices=[l.fullName for l in lang.supported_languages])
     ):
         optGuild = self.bot.client.options.get_guild(ctx.guild)
+        optionChanged = False
+        lp = lang.private_command(ctx)
 
         if language != None:
+            if not ctx.user.guild_permissions.manage_guild:
+                return await ctx.response.send_message(lp.With("MANAGE_SERVER").missingPermissions, ephemeral=True)
+
             language_code = None
 
             for l in lang.supported_languages:
@@ -29,13 +35,17 @@ class option(cmds.Cog):
             
             optGuild.language = language_code 
             await optGuild.save_json()
-            
+
+            optionChanged = True
         
-        embed = discord.Embed(title="Guild Options", description="All options for guild", color=vars.embed)
+        if optionChanged == True:
+            lp = lang.public_command(self.bot.client, ctx)
+        
+        embed = discord.Embed(title=lp.serverOptions, description=lp.allOptionsForServer, color=vars.embed)
+        embed.add_field(name=lp.language, value=lang.get_language(optGuild.language).fullName)
 
-        embed.add_field(name="Language", value=optGuild.language)
 
-        return await ctx.response.send_message(embed=embed)
+        return await ctx.response.send_message(embed=embed, ephemeral=not optionChanged)
 
 
 

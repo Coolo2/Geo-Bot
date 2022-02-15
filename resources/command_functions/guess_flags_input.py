@@ -37,11 +37,11 @@ class FlagModal(discord.ui.Modal):
         else:
             lpr = lang.private_command(interaction)
             await interaction.response.send_message(
-                lpr.gotFlagIncorrect(interaction.user.mention, self.game.guesses[str(interaction.user.id)]),
+                lpr.With(interaction.user.mention, self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
                 ephemeral=True
             )
 
-            await interaction.message.edit(content=lp.flagGameTitle(totalGuesses))
+            await interaction.message.edit(content=lp.With(totalGuesses).flagGameTitle)
 
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
@@ -57,7 +57,7 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
 
     choices_view = discord.ui.View()
     choices_view.add_item(choose_button)
-    choices_view.add_item(guess_common.EndButton(client, game, answer, start_game))
+    choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
     modal = FlagModal(client, answer, game, choices_view, title=lp.flagModalTitle) # "Guess the country of the flag"
 
@@ -70,7 +70,7 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     choose_button.callback = choose_button_callback
 
     return await interaction.response.send_message(
-        lp.flagGameTitle(0), 
+        lp.With(0).flagGameTitle, 
         file=discord.File(
             fp=await answer.get_image(),
             filename="flag.png"

@@ -52,11 +52,11 @@ class FlagDropdown(discord.ui.Select):
             lpr = lang.private_command(interaction)
 
             await interaction.response.send_message(
-                lpr.gotFlagIncorrect(interaction.user.mention, self.game.guesses[str(interaction.user.id)]),
+                lpr.With(interaction.user.mention, self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
                 ephemeral=True
             )
 
-            await interaction.message.edit(content=lp.flagGameTitle(totalGuesses))
+            await interaction.message.edit(content=lp.With(totalGuesses).flagGameTitle)
 
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
@@ -80,10 +80,10 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     dropdown = FlagDropdown(client, answer, country_choices, game, title=lp.flagModalTitle)
 
     choices_view.add_item(dropdown)
-    choices_view.add_item(guess_common.EndButton(client, game, answer, start_game))
+    choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
     return await interaction.response.send_message(
-        lp.flagGameTitle(0), 
+        lp.With(0).flagGameTitle, 
         file=discord.File(
             fp=await answer.get_image(),
             filename="flag.png"

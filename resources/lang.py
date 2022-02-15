@@ -7,34 +7,43 @@ from resources import client
 class en:
     fullName = "English"
     shortName = "en"
-
-    def wonTheGameCountryWas(user:str, country:str):
-        return f"{user} won the game! The country was **{country}**"
-    
-    def userLostNowOn(user:str, nowOn:str):
-        return f"{user} lost. They are now on {nowOn}"
-    
-    def gameFinished(totalGuesses:str, user:str, time:str):
-        return f"**__Game Finished!__**\nGuesses: **{totalGuesses}**\nCorrect Guesser: {user}\nTime: **{time}**"
-    
-    def gotFlagIncorrect(user:str, guess:str):
-        return f"{user} got the flag incorrect. (guess {guess}/2)"
-    
-    def flagGameTitle(guesses:str):
-        return f"Use the buttons below to guess the flag's country\nGuesses: **{guesses}**"
-    
-    def gotCapitalIncorrect(user:str, guess:str):
-        return f"{user} got the capital incorrect. (guess {guess}/2)"
-    
-    def capitalGameTitle(capital:str, guesses:str):
-        return f"Use the buttons below to guess the capital's country\n__**{capital}**__\nGuesses: **{guesses}**"
     
     class With:
-        def __init__(self, user:str = None, number:str = None):
-            self.usersStats = f"{user}'s stats"
-            self.usersBalance = f"{user} is on **{number}** credits"
-            self.usersWins = f"{user} has **{number}** wins"
-            self.usersLosses = f"{user} has **{number}** losses"
+        def __init__(self, arg1 = None, arg2 = None, arg3=None, arg4=None, arg5=None):
+            self.usersStats = f"{arg1}'s stats"
+            self.usersBalance = f"{arg1} is on **{arg2}** credits"
+            self.usersWins = f"{arg1} has **{arg2}** wins"
+            self.usersLosses = f"{arg1} has **{arg2}** losses"
+
+            self.wonTheGameCountryWas = f"{arg1} won the game! The country was **{arg2}**"
+            self.userLostNowOn = f"{arg1} lost. They are now on {arg2}"
+            self.gameFinished = f"**__Game Finished!__**\nGuesses: **{arg1}**\nCorrect Guesser: {arg2}\nTime: **{arg3}**"
+            self.gotFlagIncorrect = f"{arg1} got the flag incorrect. (guess {arg2}/2)"
+            self.flagGameTitle = f"Use the buttons below to guess the flag's country\nGuesses: **{arg1}**"
+            self.gotCapitalIncorrect = f"{arg1} got the capital incorrect. (guess {arg2}/2)"
+            self.capitalGameTitle = f"Use the buttons below to guess the capital's country\n__**{arg1}**__\nGuesses: **{arg2}**"
+
+            self.informationAboutCountry = f"Information about {arg1}"
+            self.rank = f"Rank `#{arg1}`"
+
+            self.setLanguage = f"Successfully set language in this server to **{arg1}**"
+
+            self.missingPermissions = f"You are missing permissions to do this. (Required: `{arg1}`)"
+
+    didntStartGame = "You didn't start this game, therefore cannot stop it."
+
+    officialLanguage = "Official Language"
+    officialLanguages = "Official Languages"
+    capitalCity = "Capital city"
+    capitalCities = "Capital cities"
+    currency = "Currency"
+    currencies = "Currencies"
+    continent = "Continent"
+    population = "Population"
+    domains = "Domains"
+
+    countryDoesNotExist = "Country does not exist."
+    locationMap = "Location (map)"
     
     wins = "Wins"
     balance = "Balance"
@@ -59,39 +68,61 @@ class en:
     losses = "Losses"
     gameEnded = "Game Ended"
 
+    noone = "No one"
 
+    serverOptions = "Server options"
+    allOptionsForServer = "All options for the server: "
+    language = "Language"
+    languages = "Languages"
+
+
+    ohNo = "Oh no!"
+    oops = "Oops!"
+
+    ranIntoError = "You have encountered an unknown error!"
+
+    
 
 class es:
     fullName = "Español"
     shortName = "es"
-
-    def wonTheGameCountryWas(user:str, country:str):
-        return f"¡{user} ganó el juego! El pais era **{country}**"
-    
-    def userLostNowOn(user:str, nowOn:str):
-        return f"{user} perdido. Ellas han perdido {nowOn} veces"
-    
-    def gameFinished(totalGuesses:str, user:str, time:str):
-        return f"**__Juego Terminado!__**\nSuposiciones: **{totalGuesses}**\nAdivinador correcto: {user}\nDuración: **{time}**"
-    
-    def gotFlagIncorrect(user:str, guess:str):
-        return f"{user} adivinó la bandera incorrectamente. (intento {guess}/2)"
-    
-    def flagGameTitle(guesses:str):
-        return f"Usa los botones de abajo para adivinar el país de la bandera\nSuposiciones: **{guesses}**"
-    
-    def gotCapitalIncorrect(user:str, guess:str):
-        return f"{user} adivinó incorrectamente. (intento {guess}/2)"
-    
-    def capitalGameTitle(capital:str, guesses:str):
-        return f"Usa los botones de abajo para adivinar el país de la ciudad capital\n__**{capital}**__\nSuposiciones: **{guesses}**"
     
     class With:
-        def __init__(self, user:str = None, number:str = None):
-            self.usersStats = f"Estadisticas de {user}"
-            self.usersBalance = f"{user} tiene **{number}** creditos"
-            self.usersWins = f"{user} tiene **{number}** victorias"
-            self.usersLosses = f"{user} ha perdido **{number}** veces"
+        def __init__(self, arg1 = None, arg2 = None, arg3=None, arg4=None, arg5=None):
+            self.usersStats = f"Estadisticas de {arg1}"
+            self.usersBalance = f"{arg1} tiene **{arg2}** creditos"
+            self.usersWins = f"{arg1} tiene **{arg2}** victorias"
+            self.usersLosses = f"{arg1} ha perdido **{arg2}** veces"
+
+            self.wonTheGameCountryWas = f"¡{arg1} ganó el juego! El pais era **{arg2}**"
+            self.userLostNowOn = f"{arg1} perdido. Ellas han perdido {arg2} veces"
+            self.gameFinished = f"**__Juego Terminado!__**\nSuposiciones: **{arg1}**\nAdivinador correcto: {arg2}\nDuración: **{arg3}**"
+            self.gotFlagIncorrect = f"{arg1} adivinó la bandera incorrectamente. (intento {arg2}/2)"
+            self.flagGameTitle = f"Usa los botones de abajo para adivinar el país de la bandera\nSuposiciones: **{arg1}**"
+            self.gotCapitalIncorrect = f"{arg1} adivinó incorrectamente. (intento {arg2}/2)"
+            self.capitalGameTitle = f"Usa los botones de abajo para adivinar el país de la ciudad capital\n__**{arg1}**__\nSuposiciones: **{arg2}**"
+
+            self.informationAboutCountry = f"Informacion sobre {arg1}"
+            self.rank = f"Rango `#{arg1}`"
+
+            self.setLanguage = f"Establecer con éxito la configuración de idioma en **{arg1}**"
+
+            self.missingPermissions = f"Usted no tiene permiso para hacer esto. Necesitas permisos de `{arg1}`"
+
+    didntStartGame = "No comenzaste el juego, por lo tanto no puedes terminarlo"
+
+    officialLanguage = "Idioma oficial"
+    officialLanguages = "Idiomas oficiales"
+    capitalCity = "Ciudad capital"
+    capitalCities = "Ciudades capitales"
+    currency = "Divisa"
+    currencies = "Divisas"
+    continent = "Continente"
+    population = "Población"
+    domains = "Dominios de la red"
+
+    countryDoesNotExist = "Ese pais no existe."
+    locationMap = "Ubicación en el mapa"
     
     wins = "Cantidad de ganancias"
     balance = "Saldo bancario"
@@ -116,12 +147,33 @@ class es:
     losses = "Pérdidas"
     gameEnded = "El juego termino"
 
+    noone = "No uno"
+
+    serverOptions = "Ajustes del servidor"
+    allOptionsForServer = "Todas los ajustes para el servidor: "
+    language = "Idioma"
+    languages = "Idiomas"
+
+    ohNo = "¡Oh no!"
+    oops = "¡Ups!"
+
+    ranIntoError = "¡Te has encontrado con un error!"
+
+    
+
+
 default = en
 supported_languages = [en, es]
 
-def public_command(client : client.Client, interaction : discord.Interaction):
+def get_language(shortName : str):
+    for language in supported_languages:
+        if language.shortName == shortName:
+            return language 
+    
+    return None
+
+def public_command(client, interaction : discord.Interaction):
     optGuild = client.options.get_guild(interaction.guild)
-    print(optGuild.language)
 
     if "en" in optGuild.language:
         return en

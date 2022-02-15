@@ -50,11 +50,11 @@ class CapitalDropdown(discord.ui.Select):
         else:
             lpr= lang.private_command(interaction)
             await interaction.response.send_message(
-                lpr.gotCapitalIncorrect(interaction.user.mention, self.game.guesses[str(interaction.user.id)]),
+                lpr.With(interaction.user.mention, self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
                 ephemeral=True
             )
 
-            await interaction.message.edit(content=lp.flagGameTitle(totalGuesses))
+            await interaction.message.edit(content=lp.With(self.answer.capitals[0], totalGuesses).capitalGameTitle)
 
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
@@ -78,9 +78,9 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     dropdown = CapitalDropdown(client, answer, country_choices, game, title=lp.flagModalTitle)
 
     choices_view.add_item(dropdown)
-    choices_view.add_item(guess_common.EndButton(client, game, answer, start_game))
+    choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
     return await interaction.response.send_message(
-        lp.capitalGameTitle(answer.capitals[0], 0), 
+        lp.With(answer.capitals[0], 0).capitalGameTitle, 
         view=choices_view
     )
