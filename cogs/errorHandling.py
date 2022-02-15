@@ -4,7 +4,7 @@ import datetime
 
 from discord.ext import commands as cmds
 from discord import ApplicationCommandError, commands
-from resources import vars, errors, lang, color
+from resources import config, errors, lang, color
 
 class errorHandling(cmds.Cog):
     def __init__(self, bot):
@@ -20,37 +20,37 @@ class errorHandling(cmds.Cog):
         msgUnkown = lp.ranIntoError
         
         if isinstance(error, cmds.CommandOnCooldown):
-            embed = discord.Embed(title=msgMild, description=f"{error}", colour=vars.embedFail)
+            embed = discord.Embed(title=msgMild, description=f"{error}", colour=config.embedFail)
             return await ctx.respond(embed=embed)
         if isinstance(error, cmds.CommandNotFound):
             pass
 
         if isinstance(error, commands.errors.ApplicationCommandInvokeError):
             if isinstance(error.original, cmds.MemberNotFound):
-                embed = discord.Embed(title=msgMild, description=f"```{str(error.original)}```", colour=vars.embedFail, timestamp=datetime.datetime.now())
+                embed = discord.Embed(title=msgMild, description=f"```{str(error.original)}```", colour=config.embedFail, timestamp=datetime.datetime.now())
                 return await ctx.respond(embed=embed, ephemeral=True)
             if isinstance(error.original, cmds.MissingPermissions):
-                embed = discord.Embed(title=msgMild, description=f"```{error.original}```", colour=vars.embedFail, timestamp=datetime.datetime.now())
+                embed = discord.Embed(title=msgMild, description=f"```{error.original}```", colour=config.embedFail, timestamp=datetime.datetime.now())
                 return await ctx.respond(embed=embed, ephemeral=True)
             if isinstance(error.original, cmds.BotMissingPermissions):
                 embed = discord.Embed(title=msgMild, 
                 description=f"```{error.original}\n\nEnsure that I have the above permissions and my role is high enough to use /{ctx.command.name}```", 
-                colour=vars.embedFail, timestamp=datetime.datetime.now())
+                colour=config.embedFail, timestamp=datetime.datetime.now())
                 return await ctx.respond(embed=embed, ephemeral=True)
             if isinstance(error.original, commands.errors.CheckFailure):
-                embed = discord.Embed(title=msgMild, description=f"t", colour=vars.embedFail)
+                embed = discord.Embed(title=msgMild, description=f"t", colour=config.embedFail)
                 return await ctx.respond(embed=embed, ephemeral=True)
 
             # Custom errors
             if isinstance(error.original, errors.UnknownError):
-                embed = discord.Embed(title=msgMild, description=f"```{error.original}```", colour=vars.embedFail, timestamp=datetime.datetime.now())
+                embed = discord.Embed(title=msgMild, description=f"```{error.original}```", colour=config.embedFail, timestamp=datetime.datetime.now())
                 return await ctx.respond(embed=embed, ephemeral=True)
             if isinstance(error.original, errors.MildErr):
-                embed = discord.Embed(title=msgMild, description=f"{error.original}", colour=vars.embedFail)
+                embed = discord.Embed(title=msgMild, description=f"{error.original}", colour=config.embedFail)
                 return await ctx.respond(embed=embed, ephemeral=True)
 
         print(f"{color.red}{error.__class__.__name__}{color.end} + {error}")
-        embed = discord.Embed(title=msgUnkown, description=f"```{error}```", colour=vars.embedFail, timestamp=datetime.datetime.now())
+        embed = discord.Embed(title=msgUnkown, description=f"```{error}```", colour=config.embedFail, timestamp=datetime.datetime.now())
         await ctx.respond(embed=embed, ephemeral=True)
             
         

@@ -21,6 +21,10 @@ class Games():
         return self.games[str(gameID)]
 
     def get_game(self, gameID : int) -> CountryGuessGame:
-        return self.games[str(gameID)]
-        
+        return self.games[str(gameID)] if str(gameID) in self.games else None
+    
+    def end_game(self, gameID : int):
+        game = self.games[str(gameID)]
+        del self.games[str(gameID)]
+        return game
 

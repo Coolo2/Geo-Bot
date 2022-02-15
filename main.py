@@ -1,5 +1,6 @@
 import discord 
 import os
+import asyncio
 
 from resources import client 
 import webserver
@@ -26,6 +27,7 @@ bot.load_extension("cogs.info")
 bot.load_extension("cogs.errorHandling")
 bot.load_extension("cogs.options")
 bot.load_extension("cogs.events")
+bot.load_extension("cogs.help")
 
 webserver.webserver_run(bot)
 bot.run(os.getenv("token"))

@@ -30,6 +30,11 @@ async def end_game(
     start_game_callback : Coroutine
     
 ):
+    if str(game.id) not in client.games.games:
+        return
+    
+    client.games.end_game(game.id)
+
     lp = lang.public_command(client, interaction)
     lpr = lang.private_command(interaction)
 

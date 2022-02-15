@@ -1,11 +1,11 @@
 import discord 
-from resources import client, geography, vars
+from resources import client, config, geography
 
 async def get_city_info_embed(client : client.Client, city : geography.City, lp):
 
     city.get_country(client.countries)
 
-    flag_average_color = await city.country.get_flag_average_colour() if city.country else vars.embed
+    flag_average_color = await city.country.get_flag_average_colour() if city.country else config.embed
 
     embed = discord.Embed(title=lp.With(city.name).informationAbout, color=flag_average_color)
 

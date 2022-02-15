@@ -1,6 +1,10 @@
 {
     "guilds": {
         "450914634963353600": {
+            "language": "en",
+            "multipleChoiceType": "select"
+        },
+        "742065869856702514": {
             "language": "en"
         }
     }

@@ -9,7 +9,7 @@ class en:
     class With:
         def __init__(self, arg1 = None, arg2 = None, arg3=None, arg4=None, arg5=None):
             self.usersStats = f"{arg1}'s stats"
-            self.usersBalance = f"{arg1} is on **{arg2}** credits"
+            self.usersBalance = f"{arg1} is on **{arg2}** credits (from **{arg3}** games)"
             self.usersWins = f"{arg1} has **{arg2}** wins"
             self.usersLosses = f"{arg1} has **{arg2}** losses"
 
@@ -28,6 +28,8 @@ class en:
 
             self.missingPermissions = f"You are missing permissions to do this. (Required: `{arg1}`)"
 
+            self.description = f"**{arg1}** is a Discord bot written in Python by {arg2} and is owned by {arg3}"
+
     didntStartGame = "You didn't start this game, therefore cannot stop it."
 
     officialLanguage = "Official Language"
@@ -42,6 +44,7 @@ class en:
     country = "Country"
 
     countryDoesNotExist = "Country does not exist."
+    cityDoesNotExist = "City does not exist."
     locationMap = "Location (map)"
     
     wins = "Wins"
@@ -80,6 +83,22 @@ class en:
     oops = "Oops!"
 
     ranIntoError = "You have encountered an unknown error!"
+    guildLanguageDisclaimer = "Guild language only affects public commands (guess games). Otherwise your Discord language is used."
+
+    avgCreditsPerGame = "Average credits per game"
+    winLossRatio = "Win:Loss"
+    more =  "More"
+
+    botInformation = "Bot information"
+    totalGamesPlayeed = "Total games played"
+    totalBalance = "Total balance"
+
+    myCommands = "My commands"
+    belowIsAListOfCommands = "Below is a list of all my commands. Use `/help command [command]` to get more info"
+    commands = "Commands"
+    showCommandList = "Show command list"
+
+    multipleChoiceType = "Multiple Choice Type"
 
     
 
@@ -90,7 +109,7 @@ class es:
     class With:
         def __init__(self, arg1 = None, arg2 = None, arg3=None, arg4=None, arg5=None):
             self.usersStats = f"Estadisticas de {arg1}"
-            self.usersBalance = f"{arg1} tiene **{arg2}** creditos"
+            self.usersBalance = f"{arg1} tiene **{arg2}** creditos (de **{arg3}** juegos)"
             self.usersWins = f"{arg1} tiene **{arg2}** victorias"
             self.usersLosses = f"{arg1} ha perdido **{arg2}** veces"
 
@@ -108,6 +127,7 @@ class es:
             self.setLanguage = f"Establecer con éxito la configuración de idioma en **{arg1}**"
 
             self.missingPermissions = f"Usted no tiene permiso para hacer esto. Necesitas permisos de `{arg1}`"
+            self.description = f"**{arg1}** es un bot de Discord escrito en Python por {arg2} y es propiedad de {arg3}"
 
     didntStartGame = "No comenzaste el juego, por lo tanto no puedes terminarlo"
 
@@ -123,6 +143,7 @@ class es:
     country = "País"
 
     countryDoesNotExist = "Ese pais no existe."
+    cityDoesNotExist = "Esa ciudad no existe."
     locationMap = "Ubicación en el mapa"
     
     wins = "Cantidad de ganancias"
@@ -160,8 +181,23 @@ class es:
     oops = "¡Ups!"
 
     ranIntoError = "¡Te has encontrado con un error!"
+    guildLanguageDisclaimer = "El idioma del servidor solo afecta a los comandos públicos (juegos de adivinanzas). De lo contrario, se utiliza su lenguaje Discord"
 
-    
+    avgCreditsPerGame = "Créditos promedio por juego"
+    winLossRatio = "Victoria:Pérdida"
+    more = "Más"
+
+    botInformation = "Información del bot"
+    totalGamesPlayeed = "Juegos totales jugados"
+    totalBalance = "Saldo total de la cuenta"
+
+    myCommands = "Mis comandos"
+    belowIsAListOfCommands = "A continuación hay una lista de todos mis comandos. Use `/help command [command]` para obtener más información"
+    commands = "Comandos"
+
+    showCommandList = "Mostrar lista de comandos"
+
+    multipleChoiceType = "Tipo de opción múltiple"
 
 
 default = en

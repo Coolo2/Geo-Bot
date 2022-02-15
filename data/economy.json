@@ -1,8 +1,8 @@
 {
     "368071242189897728": {
-        "wins": 169,
-        "losses": 121,
-        "balance": 1014
+        "wins": 184,
+        "losses": 123,
+        "balance": 1237
     },
     "418123290595426314": {
         "wins": 3,
@@ -25,13 +25,18 @@
         "balance": 0
     },
     "519206205512744972": {
-        "wins": 2,
-        "losses": 3,
-        "balance": 9
+        "wins": 5,
+        "losses": 4,
+        "balance": 47
     },
     "530301206095069194": {
-        "wins": 10,
-        "losses": 1,
-        "balance": 81
+        "wins": 21,
+        "losses": 4,
+        "balance": 245
+    },
+    "450583765266202634": {
+        "wins": 0,
+        "losses": 7,
+        "balance": 0
     }
 }

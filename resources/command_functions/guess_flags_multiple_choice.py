@@ -57,6 +57,44 @@ class FlagDropdown(discord.ui.Select):
 
             await interaction.message.edit(content=lp.With(totalGuesses).flagGameTitle)
 
+class FlagsButton(discord.ui.Button):
+    def __init__(self, client : client.Client, answer : geography.Country, country : geography.Country, game : games.CountryGuessGame):
+        self.client = client 
+        self.country = country 
+        self.answer = answer 
+        self.game = game 
+    
+        super().__init__(
+            style=discord.ButtonStyle.primary,
+            label=self.country.name
+        )
+    
+    async def callback(self, interaction : discord.Interaction):
+        lp = lang.public_command(self.client, interaction)
+
+        if str(interaction.user.id) not in self.game.guesses:
+            self.game.guesses[str(interaction.user.id)] = 0
+
+        if self.game.guesses[str(interaction.user.id)] >= 2:
+            return await interaction.response.send_message(lp.alreadyUsedGuesses, ephemeral=True)
+
+        self.game.guesses[str(interaction.user.id)] += 1
+
+        totalGuesses = 0
+        for userID in self.game.guesses:
+            totalGuesses += self.game.guesses[userID]
+
+        if self.country.name.lower() == self.answer.name.lower():
+            self.style = discord.ButtonStyle.green
+            await guess_common.end_game(self.client, self.answer, interaction, self.game, self.view, interaction.user, start_game)
+        else:
+            lpr= lang.private_command(interaction)
+            await interaction.response.send_message(
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
+                ephemeral=True
+            )
+            await interaction.message.edit(content=lp.With(totalGuesses).flagGameTitle)
+
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
     game = client.games.create_country_game(interaction.user)
@@ -69,16 +107,23 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
 
     for i in range(10):
         country_random : geography.Country = random.choice(client.countries)
-        while country_random in country_choices:
+        while country_random in country_choices or country_random == answer:
             country_random = random.choice(client.countries)
         country_choices.append(country_random)
     
     countryIndex = random.randint(0, len(country_choices)-1)
     country_choices[countryIndex] = answer
-        
-    dropdown = FlagDropdown(client, answer, country_choices, game, title=lp.flagModalTitle)
+    
+    guildOpts = client.options.get_guild(interaction.guild)
 
-    choices_view.add_item(dropdown)
+    if guildOpts.multipleChoiceType == "select":
+        dropdown = FlagDropdown(client, answer, country_choices, game, title=lp.flagModalTitle)
+        choices_view.add_item(dropdown)
+    else:
+        for country in country_choices:
+            button = FlagsButton(client, answer, country, game)
+            choices_view.add_item(button)
+
     choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
     return await interaction.response.send_message(

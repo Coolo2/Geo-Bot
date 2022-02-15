@@ -3,9 +3,9 @@ import discord
 import random
 
 from discord.ext import commands as cmds
-from resources import lang, vars
+from resources import config, lang
 
-from resources.interaction_templates import language
+from resources.interaction_templates import language, get_commands
 
 class events(cmds.Cog):
     def __init__(self, bot):
@@ -25,12 +25,13 @@ class events(cmds.Cog):
         if suitable_channel == None:
             suitable_channel = random.choice(guild.text_channels)
         
-        embed = discord.Embed(title="Thanks for adding me!", description=f"The default language is **{lang.default.fullName}**. Change it with the select menu below.", color=vars.embed)
-        embed.add_field(name="Get started", value="Try some of my commands with:\n`/help`")
+        embed = discord.Embed(title="Thanks for adding me!", description=f"The default language is **{lang.default.fullName}**. Change it with the select menu below.", color=config.embed)
+        embed.add_field(name="Get started", value="Try some of my commands with:\n`/help commands` (or the button below)")
         
         
         view = discord.ui.View()
         view.add_item(language.LanguageSelector(self.bot))
+        view.add_item(get_commands.GetCommandsButton(self.bot.client, lang.default))
 
         await suitable_channel.send(embed=embed, view=view)
     

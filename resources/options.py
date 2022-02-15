@@ -18,6 +18,9 @@ class GuildOptions():
         self._options = options
         self.data = None
 
+        self.language = None 
+        self.multipleChoiceType = None
+
         self._from_json(
             self._options.client.http.get_file_sync("data/options.json")
         )
@@ -34,13 +37,16 @@ class GuildOptions():
     def _from_json(self, data : dict):
         self.data = data 
 
-        if "guilds" in data and str(self.guild.id) in data["guilds"]:
+        self.language = "en"
+        if "guilds" in data and str(self.guild.id) in data["guilds"] and "language" in data["guilds"][str(self.guild.id)]:
             self.language = data["guilds"][str(self.guild.id)]["language"]
-        else:
-            self.language = "en"
+            
+        self.multipleChoiceType = "button"
+        if "guilds" in data and str(self.guild.id) in data["guilds"] and "multipleChoiceType" in data["guilds"][str(self.guild.id)]:
+            self.multipleChoiceType = data["guilds"][str(self.guild.id)]["multipleChoiceType"]
     
     def to_json(self):
-        return {"language":self.language}
+        return {"language":self.language, "multipleChoiceType":self.multipleChoiceType}
 
     async def save_json(self):
         dt = self._options.client.http.get_file_sync("data/options.json")
@@ -49,5 +55,4 @@ class GuildOptions():
             dt["guilds"] = {}
 
         dt["guilds"][str(self.guild.id)] = self.to_json()
-        print(dt)
         return await self._options.client.http.save_to_file("data/options.json", dt)

@@ -69,7 +69,7 @@ class info(cmds.Cog):
         city : geography.City = self.bot.client.get_city(city, countryCode=country_code, ignoreCaps=True)
 
         if not city:
-            raise errors.MildErr(lp.countryDoesNotExist)
+            raise errors.MildErr(lp.cityDoesNotExist)
 
         await ctx.respond(embed=await info_city.get_city_info_embed(self.bot.client, city, lp))
         
