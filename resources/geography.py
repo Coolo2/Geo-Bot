@@ -20,6 +20,11 @@ class Country():
         self.capitals = country_data["capital"] if "capital" in country_data else []
         self.continent_name = country_data["region"]
         self.subregion = country_data["subregion"] if "subregion" in country_data else None
+        self.government_type = country_data["government_type"] if "government_type" in country_data else None
+        self.avg_male_height = country_data["avg_male_height"] if "avg_male_height" in country_data else None
+        self.calling_code = country_data["calling_code"] if "calling_code" in country_data else None
+        self.population_density = country_data["population_density"] if "population_density" in country_data else None
+        self.area = country_data["area"]
 
         self.domains = country_data["tld"] if "tld" in country_data else None
         self.population = country_data["population"]

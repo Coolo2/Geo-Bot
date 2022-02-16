@@ -111,7 +111,10 @@ class en:
     userOptions = "User Options"
     yourUserOptions = "Your user options"
 
-
+    area = "Area"
+    populationDensity = "Population Density"
+    averageMaleHeight = "Average Male Height"
+    callingCode = "Calling Code"
     
 
 class es:
@@ -221,6 +224,11 @@ class es:
 
     userOptions = "Opciones de usuario"
     yourUserOptions = "Sus opciones de usuario"
+
+    area = "Área"
+    populationDensity = "Densidad de población"
+    averageMaleHeight = "Altura media masculina"
+    callingCode = "Código de llamada"
 
 
 

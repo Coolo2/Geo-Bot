@@ -16,7 +16,7 @@ async def get_stats_embed(client : client.Client, user : discord.User, language)
 
     moreStats = f"""
 {lp.winLossRatio} - **{round(economyUser.wins / economyUser.losses, 2) if economyUser.losses != 0 else 0}**
-{lp.avgCreditsPerGame} - **{round(economyUser.balance / totalGames) if totalGames != 0 else 0}**
+{lp.avgCreditsPerGame} - **{round(economyUser.balance / totalGames, 2) if totalGames != 0 else 0}**
     """
 
     embed.add_field(name=lp.balance, value=lp.With(user, economyUser.balance, totalGames).usersBalance, inline=False)

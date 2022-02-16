@@ -43,8 +43,12 @@ async def get_country_info_embed(client : client.Client, country : geography.Cou
         value=(", ".join(f"{currency.name} (`{currency.symbol}`)" for currency in country.currencies)), 
         inline=False
     )
-    embed.add_field(name=lp.continent, value=f"{country.continent_name} ({country.subregion})", inline=False)
+    embed.add_field(name=lp.continent, value=f"{country.continent_name} ({country.subregion})")
     embed.add_field(name=lp.population, value=f"{country.population:,d} ({lp.With(country.get_population_rank(client)).rank})")
+    embed.add_field(name=lp.area, value=f"{round(country.area):,d} km²")
+    embed.add_field(name=lp.populationDensity, value=f"{round(country.population_density, 2) if country.population_density else 'Unknown '}/km²")
+    embed.add_field(name=lp.averageMaleHeight, value=f"{country.avg_male_height if country.avg_male_height else 'Unknown '}cm")
+    embed.add_field(name=lp.callingCode, value=f"+{country.calling_code if country.calling_code else 'Unknown'}")
 
     if len(country.domains) > 0:
         embed.add_field(name=lp.domains, value="`" + ("`, `".join(country.domains)) + "`", inline=False)

@@ -8,7 +8,7 @@ from resources.command_functions import info_user, info_country, info_city
 
 async def country_autocomplete(ctx : discord.AutocompleteContext):
     countries = []
-    for country in ctx.bot.client.countries:
+    for country in ctx.bot.client.all_countries:
         if not ctx.focused or ctx.value.lower() in country.name.lower():
             countries.append(country.name)
     return countries[:25]
