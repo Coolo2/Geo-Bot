@@ -3,6 +3,7 @@ from discord.ext import commands as cmds
 from discord import commands
 
 from resources.command_functions import guess_flags_input, guess_capital_input, guess_flags_multiple_choice, guess_capital_multiple_choice
+from resources.command_functions import guess_shapes_multiple_choice, guess_shapes_input
 
 class guess(cmds.Cog):
     def __init__(self, bot):
@@ -35,6 +36,14 @@ class guess(cmds.Cog):
     @multiple_choice.command(name="capitals", description="Guess a country from its capital city (multiple choice)")
     async def _capitals_multiple_choice(self, ctx : commands.ApplicationContext):
         await guess_capital_multiple_choice.start_game(self.bot.client, ctx, ctx.author)
+
+    @multiple_choice.command(name="maps", description="Guess a country from a silhouette of the map")
+    async def _shapes_multiple_choice(self, ctx : commands.ApplicationContext):
+        await guess_shapes_multiple_choice.start_game(self.bot.client, ctx, ctx.author)
+    
+    @input_games.command(name="maps", description="Guess a country from a silhouette of the map (text input)")
+    async def _shapes_input(self, ctx : commands.ApplicationContext):
+        await guess_shapes_input.start_game(self.bot.client, ctx, ctx.author)
     
 def setup(bot):
     bot.add_cog(guess(bot))

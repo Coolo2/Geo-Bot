@@ -36,7 +36,7 @@ async def end_game(
     client.games.end_game(game.id)
 
     lp = lang.public_command(client, interaction)
-    lpr = lang.private_command(interaction)
+    lpr = lang.private_command(client, interaction)
 
     if user == None:
         user_str = lp.noone
@@ -122,15 +122,18 @@ class NewGameView(discord.ui.View):
     
     @discord.ui.button(style=discord.ButtonStyle.primary, label=lang.default.getStats)
     async def get_stats(self, button : discord.Button, interaction : discord.Interaction):
-        lpr = lang.private_command(interaction)
+        lpr = lang.private_command(self.client, interaction)
 
         return await interaction.response.send_message(embed=await info_user.get_stats_embed(self.client, interaction.user, lpr), ephemeral=True)
     
     @discord.ui.button(style=discord.ButtonStyle.primary, label=lang.default.getCountryInfo)
     async def country_info(self, button : discord.Button, interaction : discord.Interaction):
-        lpr = lang.private_command(interaction)
+        lpr = lang.private_command(self.client, interaction)
 
-        return await interaction.response.send_message(embed=await info_country.get_country_info_embed(self.client, self.answer, lpr), ephemeral=True)
+        view = discord.ui.View()
+        view.add_item(info_country.ToggleFlagButton(self.answer))
+
+        return await interaction.response.send_message(embed=await info_country.get_country_info_embed(self.client, self.answer, lpr), view=view, ephemeral=True)
 
 class EndButton(discord.ui.Button):
     def __init__(self, client : client.Client, game : games.CountryGuessGame, answer : geography.Country, language, start_callback : Coroutine):

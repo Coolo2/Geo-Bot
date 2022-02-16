@@ -1,8 +1,7 @@
 import discord 
 import os
-import asyncio
 
-from resources import client 
+from resources import client, color
 import webserver
 
 intents = discord.Intents.default()
@@ -10,7 +9,6 @@ intents.members = False
 
 bot = discord.Bot(debug_guilds=[450914634963353600, 742065869856702514])
 hardResetGuildCommands = False
-
 
 @bot.event 
 async def on_ready():
@@ -22,12 +20,11 @@ async def on_ready():
 
     bot.client = client.Client(bot)
 
-bot.load_extension("cogs.guess")
-bot.load_extension("cogs.info")
-bot.load_extension("cogs.errorHandling")
-bot.load_extension("cogs.options")
-bot.load_extension("cogs.events")
-bot.load_extension("cogs.help")
+extensions =  [f"cogs.{f.replace('.py', '')}" for f in os.listdir("./cogs") if os.path.isfile(os.path.join("./cogs", f))]
+
+for extension in extensions:
+    bot.load_extension(extension)
+    print(f"{color.green}{color.underline}{extension}{color.end}{color.green} loaded{color.end}")
 
 webserver.webserver_run(bot)
 bot.run(os.getenv("token"))

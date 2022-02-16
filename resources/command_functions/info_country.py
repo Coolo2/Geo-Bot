@@ -15,9 +15,9 @@ class ToggleFlagButton(discord.ui.Button):
         embed = interaction.message.embeds[0]
 
         if embed.thumbnail.url == self.country.flag_url:
-            embed.set_thumbnail(url=self.country.map_image_url)
+            embed.set_thumbnail(url=self.country.shape_image_url)
             self.label = "Show Flag"
-        elif embed.thumbnail.url == self.country.map_image_url:
+        elif embed.thumbnail.url == self.country.shape_image_url:
             embed.set_thumbnail(url=self.country.flag_url)
             self.label = "Show Map"
         

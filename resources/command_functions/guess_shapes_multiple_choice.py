@@ -6,11 +6,12 @@ from resources import client, geography, games, lang
 
 from resources.command_functions import guess_common
 
-class CapitalDropdown(discord.ui.Select):
+class ShapesDropdown(discord.ui.Select):
     def __init__(self, client : client.Client, answer : geography.Country, country_choices : List[geography.Country], game : games.CountryGuessGame, *args, **kwargs):
         self.answer = answer
         self.game = game
         self.client = client
+
         self.country_choices = country_choices
 
         options = []
@@ -19,7 +20,7 @@ class CapitalDropdown(discord.ui.Select):
             options.append(discord.SelectOption(label=country.name))
         
         super().__init__(
-            placeholder="Choose the country of this capital city",
+            placeholder="Choose the country of this map",
             min_values=1,
             max_values=1,
             options=options
@@ -47,15 +48,16 @@ class CapitalDropdown(discord.ui.Select):
 
             await guess_common.end_game(self.client, self.answer, interaction, self.game, self.view, interaction.user, start_game)
         else:
-            lpr= lang.private_command(self.client, interaction)
+            lpr = lang.private_command(self.client, interaction)
+
             await interaction.response.send_message(
-                lpr.With(self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotShapeIncorrect,
                 ephemeral=True
             )
 
-            await interaction.message.edit(content=lp.With(self.answer.capitals[0], totalGuesses).capitalGameTitle)
+            await interaction.message.edit(content=lp.With(totalGuesses).shapeGameTitle)
 
-class CapitalButton(discord.ui.Button):
+class ShapesButton(discord.ui.Button):
     def __init__(self, client : client.Client, answer : geography.Country, country : geography.Country, game : games.CountryGuessGame):
         self.client = client 
         self.country = country 
@@ -86,12 +88,12 @@ class CapitalButton(discord.ui.Button):
             self.style = discord.ButtonStyle.green
             await guess_common.end_game(self.client, self.answer, interaction, self.game, self.view, interaction.user, start_game)
         else:
-            lpr= lang.private_command(self.client, interaction)
+            lpr = lang.private_command(self.client, interaction)
             await interaction.response.send_message(
-                lpr.With(self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotShapeIncorrect,
                 ephemeral=True
             )
-            await interaction.message.edit(content=lp.With(self.answer.capitals[0], totalGuesses).capitalGameTitle)
+            await interaction.message.edit(content=lp.With(totalGuesses).shapeGameTitle)
 
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
@@ -115,17 +117,21 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     guildOpts = client.options.get_guild(interaction.guild)
 
     if guildOpts.multipleChoiceType == "select":
-        dropdown = CapitalDropdown(client, answer, country_choices, game, title=lp.flagModalTitle)
+        dropdown = ShapesDropdown(client, answer, country_choices, game, title=lp.shapeModalTitle)
         choices_view.add_item(dropdown)
     else:
         for country in country_choices:
-            button = CapitalButton(client, answer, country, game)
+            button = ShapesButton(client, answer, country, game)
             choices_view.add_item(button)
 
     choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
     return await interaction.response.send_message(
-        lp.With(answer.capitals[0], 0).capitalGameTitle, 
-        view=choices_view
+        lp.With(0).shapeGameTitle, 
+        file=discord.File(
+            fp=await answer.get_shape_image(),
+            filename="shape.png"
+        ),
+            view=choices_view
     )
     

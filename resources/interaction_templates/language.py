@@ -26,7 +26,7 @@ class LanguageSelector(discord.ui.Select):
     
     async def callback(self, interaction : discord.Interaction):
 
-        lp = lang.private_command(interaction)
+        lp = lang.private_command(self.bot.client, interaction)
 
         if not interaction.user.guild_permissions.manage_guild:
             return await interaction.response.send_message(lp.With("MANAGE_SERVER").missingPermissions, ephemeral=True)

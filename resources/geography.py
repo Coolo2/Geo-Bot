@@ -30,12 +30,15 @@ class Country():
             if "symbol" in currency else None, currency["name"]) 
             for currency in country_data["currencies"].values()] if "currencies" in country_data else []
 
-        self.map_image_url = f"https://raw.githubusercontent.com/djaiss/mapsicon/master/all/{self.code.lower()}/1024.png"
+        self.shape_image_url = f"https://raw.githubusercontent.com/djaiss/mapsicon/master/all/{self.code.lower()}/1024.png"
 
         #self.raw = country_data
     
-    async def get_image(self):
+    async def get_flag_image(self):
         return await images.get_image_data(self.flag_url)
+    
+    async def get_shape_image(self):
+        return await images.get_image_data(self.shape_image_url)
     
     async def get_flag_average_colour(self):
         return images.get_average_color(images.get_image_from_data(await images.get_image_data(self.flag_url_low_res)))

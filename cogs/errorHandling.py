@@ -14,7 +14,7 @@ class errorHandling(cmds.Cog):
     @cmds.Cog.listener()
     async def on_application_command_error(self, ctx : discord.ApplicationContext, error : ApplicationCommandError):
 
-        lp = lang.private_command(ctx)
+        lp = lang.private_command(self.bot.client, ctx)
         
         msgMild = random.choice([lp.oops, lp.ohNo])
         msgUnkown = lp.ranIntoError

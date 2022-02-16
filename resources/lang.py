@@ -18,6 +18,8 @@ class en:
             self.gameFinished = f"**__Game Finished!__**\nGuesses: **{arg1}**\nCorrect Guesser: {arg2}\nTime: **{arg3}**"
             self.gotFlagIncorrect = f"You got the flag incorrect. (guess {arg1}/2)"
             self.flagGameTitle = f"Use the buttons below to guess the flag's country\nGuesses: **{arg1}**"
+            self.gotShapeIncorrect = f"You got the country incorrect. (guess {arg1}/2)"
+            self.shapeGameTitle = f"Use the buttons below to guess the map's country\nGuesses: **{arg1}**"
             self.gotCapitalIncorrect = f"You got the capital incorrect. (guess {arg1}/2)"
             self.capitalGameTitle = f"Use the buttons below to guess the capital's country\n__**{arg1}**__\nGuesses: **{arg2}**"
 
@@ -61,6 +63,11 @@ class en:
     capitalModalLabel = "Country Name"
     capitalModalPlaceholder = f"{capitalModalLabel} (case insensitive)"
 
+    shapeButtonLabel = "Guess Map Country"
+    shapeModalTitle = "Guess the country of the map"
+    shapeModalLabel = "Country Name"
+    shapeModalPlaceholder = f"{flagModalLabel} (case insensitive)"
+
     startNewGame = "Start New Game"
     startNewGameUsed = f"{startNewGame} (used)"
 
@@ -77,6 +84,7 @@ class en:
     allOptionsForServer = "All options for the server: "
     language = "Language"
     languages = "Languages"
+    languageOverwrite = "Language Overwrite"
 
 
     ohNo = "Oh no!"
@@ -100,6 +108,10 @@ class en:
 
     multipleChoiceType = "Multiple Choice Type"
 
+    userOptions = "User Options"
+    yourUserOptions = "Your user options"
+
+
     
 
 class es:
@@ -118,6 +130,8 @@ class es:
             self.gameFinished = f"**__Juego Terminado!__**\nSuposiciones: **{arg1}**\nAdivinador correcto: {arg2}\nDuración: **{arg3}**"
             self.gotFlagIncorrect = f"Adivinaste la bandera incorrectamente. (intento {arg2}/2)"
             self.flagGameTitle = f"Usa los botones de abajo para adivinar el país de la bandera\nSuposiciones: **{arg1}**"
+            self.gotShapeIncorrect = f"Tienes el país incorrecto. (intento {arg1}/2)"
+            self.shapeGameTitle = f"Usa los botones de abajo para adivinar el país de la mapa\nSuposiciones: **{arg1}**"
             self.gotCapitalIncorrect = f"Adivinaste incorrectamente. (intento {arg2}/2)"
             self.capitalGameTitle = f"Usa los botones de abajo para adivinar el país de la ciudad capital\n__**{arg1}**__\nSuposiciones: **{arg2}**"
 
@@ -160,6 +174,11 @@ class es:
     capitalModalLabel = "Nombre del País"
     capitalModalPlaceholder = f"{capitalModalLabel}"
 
+    shapeButtonLabel = "Adivina el país de los mapas"
+    shapeModalTitle = "Adivina el país de los mapas"
+    shapeModalLabel = "Nombre del país"
+    shapeModalPlaceholder = f"{flagModalLabel}"
+
     startNewGame = "Empieza un juego nuevo"
     startNewGameUsed = f"{startNewGame} (usado)"
 
@@ -176,6 +195,7 @@ class es:
     allOptionsForServer = "Todas los ajustes para el servidor: "
     language = "Idioma"
     languages = "Idiomas"
+    languageOverwrite = "Sobrescribir idioma"
 
     ohNo = "¡Oh no!"
     oops = "¡Ups!"
@@ -199,6 +219,10 @@ class es:
 
     multipleChoiceType = "Tipo de opción múltiple"
 
+    userOptions = "Opciones de usuario"
+    yourUserOptions = "Sus opciones de usuario"
+
+
 
 default = en
 supported_languages = [en, es]
@@ -220,11 +244,15 @@ def public_command(client, interaction : discord.Interaction):
     else:
         return default
 
-def private_command(interaction : discord.Interaction):
+def private_command(client, interaction : discord.Interaction) -> en | es:
+    lang = default
+
     if "en" in interaction.locale:
-        return en
+        lang = en
     elif "es" in interaction.locale:
-        return es
-    else:
-        return default
+        lang = es
+    
+    optUser = client.options.get_user(interaction.user, lang)
+
+    return optUser.language
         

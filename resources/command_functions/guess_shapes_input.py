@@ -5,7 +5,7 @@ from resources import client, geography, games, lang
 
 from resources.command_functions import guess_common
 
-class CapitalModal(discord.ui.Modal):
+class ShapeModal(discord.ui.Modal):
     def __init__(self, client : client.Client, answer : geography.Country, game : games.CountryGuessGame, view : discord.ui.View, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.answer = answer
@@ -35,13 +35,12 @@ class CapitalModal(discord.ui.Modal):
             await guess_common.end_game(self.client, self.answer, interaction, self.game, self.view, interaction.user, start_game)
         else:
             lpr = lang.private_command(self.client, interaction)
-
             await interaction.response.send_message(
-                lpr.With(self.game.guesses[str(interaction.user.id)]).gotCapitalIncorrect,
+                lpr.With(self.game.guesses[str(interaction.user.id)]).gotShapeIncorrect,
                 ephemeral=True
             )
 
-            await interaction.message.edit(content=lp.With(self.answer.capitals[0], totalGuesses).capitalGameTitle)
+            await interaction.message.edit(content=lp.With(totalGuesses).shapeGameTitle)
 
 async def start_game(client : client.Client, interaction : discord.Interaction, requestor : discord.Member):
     answer : geography.Country = random.choice(client.countries)
@@ -52,16 +51,16 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     choose_button = discord.ui.Button(
         style=discord.ButtonStyle.primary,
         emoji="🗳️",
-        label=lp.capitalButtonLabel
+        label=lp.shapeButtonLabel
     )
 
     choices_view = discord.ui.View()
     choices_view.add_item(choose_button)
     choices_view.add_item(guess_common.EndButton(client, game, answer, lp, start_game))
 
-    modal = CapitalModal(client, answer, game, choices_view, title=lp.capitalModalTitle) # "Guess the country of the flag"
+    modal = ShapeModal(client, answer, game, choices_view, title=lp.shapeModalTitle) # "Guess the country of the shape"
 
-    modal_input_box = discord.ui.InputText(style=discord.InputTextStyle.singleline, placeholder=lp.capitalModalPlaceholder, label=lp.capitalModalLabel)
+    modal_input_box = discord.ui.InputText(style=discord.InputTextStyle.singleline, placeholder=lp.shapeModalPlaceholder, label=lp.shapeModalLabel)
     modal.add_item(modal_input_box)
 
     async def choose_button_callback(interaction : discord.Interaction):
@@ -70,7 +69,11 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     choose_button.callback = choose_button_callback
 
     return await interaction.response.send_message(
-        lp.With(answer.capitals[0], 0).capitalGameTitle, 
-        view=choices_view
+        lp.With(0).shapeGameTitle, 
+        file=discord.File(
+            fp=await answer.get_shape_image(),
+            filename="shape.png"
+        ),
+            view=choices_view
     )
     

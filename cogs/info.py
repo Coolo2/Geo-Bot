@@ -34,7 +34,7 @@ class info(cmds.Cog):
         if user == None:
             user = ctx.author
         
-        language = lang.private_command(ctx)
+        language = lang.private_command(self.bot.client, ctx)
 
         return await ctx.respond(embed=await info_user.get_stats_embed(self.bot.client, user, language))
     
@@ -42,7 +42,7 @@ class info(cmds.Cog):
     async def _country(self, ctx : discord.ApplicationContext, country : discord.Option(str, description="The country to get information on", autocomplete=country_autocomplete)):
         await self.bot.client.options.get_guild(ctx.guild).init(ctx)
 
-        lp = lang.private_command(ctx)
+        lp = lang.private_command(self.bot.client, ctx)
 
         country : geography.Country = self.bot.client.get_country(country, ignoreCaps=True)
 
@@ -58,7 +58,7 @@ class info(cmds.Cog):
     async def _city(self, ctx : discord.ApplicationContext, city : discord.Option(str, description="The city to get information on", autocomplete=city_autocomplete)):
         await self.bot.client.options.get_guild(ctx.guild).init(ctx)
 
-        lp = lang.private_command(ctx)
+        lp = lang.private_command(self.bot.client, ctx)
 
         country_code = None
         if ", " in city:

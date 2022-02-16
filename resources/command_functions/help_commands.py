@@ -16,7 +16,7 @@ async def get_commands_embed(client : client.Client, language):
                 bot_commands[str(subcommand)] = subcommand
 
     cmdsStr = ""
-    for cmdName, cmd in bot_commands.items():
+    for cmd in bot_commands.values():
         cmdsStr += f"`/{cmd.qualified_name}` - {cmd.description}\n"
     
     embed = discord.Embed(title=language.myCommands, description=language.belowIsAListOfCommands, color=config.embed)

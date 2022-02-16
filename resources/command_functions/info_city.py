@@ -15,6 +15,4 @@ async def get_city_info_embed(client : client.Client, city : geography.City, lp)
     if city.country:
         embed.set_thumbnail(url=city.country.flag_url)
 
-    
-
     return embed

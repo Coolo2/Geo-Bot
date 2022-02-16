@@ -18,7 +18,7 @@ class help(cmds.Cog):
     @help_commands.command(name="bot", description="Information about the bot")
     async def _bot(self, ctx):
 
-        lp = lang.private_command(ctx)
+        lp = lang.private_command(self.bot.client, ctx)
 
         raw_data : dict = await self.bot.client.economy._get_economy()
         total_games = 0
@@ -45,7 +45,7 @@ class help(cmds.Cog):
     
     @help_commands.command(name="commands", description="Command list")
     async def _command(self, ctx : discord.ApplicationContext):
-        language = lang.private_command(ctx)
+        language = lang.private_command(self.bot.client, ctx)
         
         await ctx.response.send_message(embed=await help_commands.get_commands_embed(self.bot.client, language), ephemeral=True)
         

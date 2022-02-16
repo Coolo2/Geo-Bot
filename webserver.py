@@ -28,7 +28,7 @@ def custom_image(filename):
 def home():
     return flask.render_template('index.html', last_updated=dir_last_updated('/static'))
 
-@app.route('/reply/<path:channelId>/<path:messageId>')
+"""@app.route('/reply/<path:channelId>/<path:messageId>')
 def reply(channelId, messageId):
     args = flask.request.args.to_dict()
 
@@ -41,7 +41,7 @@ def reply(channelId, messageId):
         embed = discord.Embed.from_dict(embedData)
 
     bot.loop.create_task(replyTo(bot, int(channelId), int(messageId), content, embed))
-    return "hi"
+    return "hi"""
 
 def dir_last_updated(folder):
     try:

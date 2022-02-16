@@ -34,7 +34,7 @@ class FlagModal(discord.ui.Modal):
 
             await guess_common.end_game(self.client, self.answer, interaction, self.game, self.view, interaction.user, start_game)
         else:
-            lpr = lang.private_command(interaction)
+            lpr = lang.private_command(self.client, interaction)
             await interaction.response.send_message(
                 lpr.With(self.game.guesses[str(interaction.user.id)]).gotFlagIncorrect,
                 ephemeral=True
@@ -71,7 +71,7 @@ async def start_game(client : client.Client, interaction : discord.Interaction, 
     return await interaction.response.send_message(
         lp.With(0).flagGameTitle, 
         file=discord.File(
-            fp=await answer.get_image(),
+            fp=await answer.get_flag_image(),
             filename="flag.png"
         ),
             view=choices_view

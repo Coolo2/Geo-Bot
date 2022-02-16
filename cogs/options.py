@@ -20,7 +20,7 @@ class option(cmds.Cog):
     ):
         optGuild = self.bot.client.options.get_guild(ctx.guild)
         optionChanged = False
-        lp = lang.private_command(ctx)
+        lp = lang.private_command(self.bot.client, ctx)
 
         if language != None:
             if not ctx.user.guild_permissions.manage_guild:
@@ -56,8 +56,41 @@ class option(cmds.Cog):
         embed.add_field(name=lp.multipleChoiceType, value=optGuild.multipleChoiceType.title())
         embed.set_footer(text="*" + lp.guildLanguageDisclaimer)
 
-
         return await ctx.response.send_message(embed=embed, ephemeral=not optionChanged)
+
+    @options.command(name="user", description="Use options")
+    async def _user(
+        self, 
+        ctx : discord.ApplicationContext,
+        language_overwrite : commands.Option(str, required=False, description="Language choice to overwrite your client language (default)", choices=["None (Client Default)"] + [l.fullName for l in lang.supported_languages]),
+    ):
+        lp = lang.private_command(self.bot.client, ctx) 
+        optionChanged = False
+        optUser = self.bot.client.options.get_user(ctx.author, lp)
+
+        if language_overwrite != None:
+            language_code = None
+
+            if language_overwrite != "None (Client Default)":
+                for l in lang.supported_languages:
+                    if l.fullName == language_overwrite:
+                        language_code = l.shortName
+
+            
+            optUser.languageOverwrite = language_code
+            await optUser.save_json()
+
+            optionChanged = True
+
+        if optionChanged:
+            lp = lang.private_command(self.bot.client, ctx) 
+            optUser = self.bot.client.options.get_user(ctx.author, lp)
+
+        embed = discord.Embed(title=lp.userOptions, description=lp.yourUserOptions, color=config.embed)
+        embed.add_field(name=lp.languageOverwrite, value=optUser.languageOverwrite.fullName if optUser.languageOverwrite else "None (Client Language)")
+
+        return await ctx.response.send_message(embed=embed, ephemeral=True)
+
 
 
 
